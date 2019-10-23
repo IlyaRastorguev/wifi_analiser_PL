@@ -6,8 +6,9 @@ import Location from '@material-ui/icons/MyLocation';
 import Tabs from '../../../components/tabs/MaterialTab';
 import {Reports} from "../../reports-view/reports";
 import {Locations} from "../../locations-view/locations";
+import {Users,Profile} from "../../users-view/users";
 
-export default function MenuBar({tabs}) {
+export default function MenuBar() {
     return (
         <Tabs
             title="Menu"
@@ -20,7 +21,8 @@ export default function MenuBar({tabs}) {
                 },
                 {
                     tabName: "Users",
-                    tabIcon: ViewList
+                    tabIcon: ViewList,
+                    tabContent: (<Users />)
                 },
                 {
                     tabName: "Locations",
@@ -29,7 +31,8 @@ export default function MenuBar({tabs}) {
                 },
                 {
                     tabName: "User settings",
-                    tabIcon: AccountCircle
+                    tabIcon: AccountCircle,
+                    tabContent: (<Profile />)
                 }
             ]}
         />

@@ -1,23 +1,51 @@
 import React, {useState, useEffect} from 'react'
 import MaterialTable from "../../components/table/table";
 import utils from './utils'
-import MaterialInput from "../../components/input/input";
 
 const HEADERS = [
     'Дата создания',
-    'ID юзера',
+    'Устройсво',
     'Локация',
-    'ID устройства',
+    'Репортирующий',
     'Комментарий'
 ];
 
 export function Reports() {
-    const [reports, update] = useState([]);
+    const [reports, update] = useState();
     const [page, countPages] = useState(0);
     const [size, setSize] = useState(10);
 
     const sizeCountHandler = (event) => {
         event && event.target && setSize(event.target.value)
+    };
+
+    const deleteHandler = () => {
+        utils.getReports(page, size)(update)
+    };
+
+    const deleteReport = (index) => {
+        utils.deleteReport(reports[index][0])
+    };
+
+    const reportConverter = () => {
+        if (!reports) return [];
+
+        return reports.map((item)=> {
+            const {
+                creationDate,
+                comment,
+                ownerUser,
+                location,
+                deviceInfo
+            } = item;
+            return [
+                creationDate,
+                deviceInfo.device,
+                location.name,
+                ownerUser.login,
+                comment
+            ]
+        });
     };
 
     useEffect(() => {
@@ -27,8 +55,11 @@ export function Reports() {
 
     return (
         <div>
-            <MaterialInput inputProps={{onchange: sizeCountHandler, value: size}} labelText="Загружать по: "/>
-            <MaterialTable tableHeaderColor="success" tableHead={HEADERS} tableData={reports}/>
+            <MaterialTable
+                tableHeaderColor="success"
+                tableHead={HEADERS}
+                tableData={reportConverter()}
+            />
         </div>
     )
 }

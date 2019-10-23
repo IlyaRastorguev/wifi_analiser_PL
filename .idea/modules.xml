@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$USER_HOME$/Documents/material-dashboard-react-master/.idea/material-dashboard-react-master.iml" filepath="$USER_HOME$/Documents/material-dashboard-react-master/.idea/material-dashboard-react-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wifi_analiser_PL.iml" filepath="$PROJECT_DIR$/.idea/wifi_analiser_PL.iml" />
     </modules>
   </component>

@@ -1,3 +1,4 @@
+import React from 'react'
 import axios from 'axios'
 
 import { default as API } from './API'
@@ -9,11 +10,16 @@ function inputHandler(event, regexp) {
             isValid: regexp ? event.target.value.match(regexp) : true
         }
     }
+
+    return {
+        value: '',
+        isValid: false
+    }
 }
 
 
 function saveToken(token, key) {
-    window[key] = token
+   API.setTokens(key, token)
 }
 
 function refreshToken(time, usrn, pass) {
@@ -22,33 +28,43 @@ function refreshToken(time, usrn, pass) {
     }, time)
 }
 
-function Auth (username, pass, role) {
+function checkAuth() {
+    return !!API.getToken(API.auth)
+}
 
+function Auth (username, pass, role) {
     return (callBack) => axios({
         method: 'post',
         url: API.OAuth(),
-        data: {
+        head: {
+            'Access-Control-Allow-Origin': `http://localhost:3000`
+        },
+        auth: {
+            username: 'web',
+            password: `${pass}`
+        },
+        withCredentials: true,
+        params: {
             username: username,
             password: pass,
             scope: role,
             grant_type: 'password'
         }
     }).then(function (response) {
-        saveToken(response['access_token'], API.auth);
-        saveToken(response['refresh_token'], API.auth);
+        saveToken(response.data['access_token'], API.auth);
+        saveToken(response.data['refresh_token'], API.refresh);
         callBack()
     })
 }
 
 function Refresh (username, pass) {
-
     return (callBack) => axios({
         method: 'post',
         url: API.OAuth(),
-        header: {
+        headers: {
             Authorization: `Basic ${btoa(`${username}:${pass}`)}`
         },
-        data: {
+        params: {
             refresh_token: window[API.refresh],
             grant_type: 'refresh_token'
         }
@@ -62,5 +78,6 @@ function Refresh (username, pass) {
 
 export default {
     Auth,
-    inputHandler
+    inputHandler,
+    checkAuth
 }

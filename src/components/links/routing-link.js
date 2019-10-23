@@ -7,7 +7,7 @@ import RegularButton
 export default function RouterLink ({to, action, text}) {
     const [isValid, update] = useState(false);
 
-    const validate = () => action(()=> update(true));
+    const validate = () =>  action(()=> update(true));
 
     return (
         <RegularButton color="success" onClick={validate}>

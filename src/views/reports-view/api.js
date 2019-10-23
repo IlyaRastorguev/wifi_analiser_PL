@@ -1,3 +1,5 @@
+import Connector from '../../connector'
+
 export default {
-    getReports: () => '/wifi-analyzer/api/v1/report'
+    reports: () => `${Connector.getHost()}/wifi-analyzer/api/v1/report`
 }

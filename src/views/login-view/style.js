@@ -2,9 +2,8 @@
 const loginLayoutStyle = {
    main: {
        width: '300px',
-       height: '500px',
-       display: 'flex',
-       justifyContent: 'center'
+       height: '600px',
+       display: 'flex'
    },
     card: {
        padding: '16px',
