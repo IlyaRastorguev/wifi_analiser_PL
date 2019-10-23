@@ -5,10 +5,19 @@ import {TextField} from "@material-ui/core";
 import utils from './utils'
 
 import styles from './style'
+import RegularButton from "../../components/buttons/button";
 
 const useStyle = makeStyles(styles);
 
-const HEADERS = [
+const LIST_HEADERS = [
+    'Действие',
+    'Дата регистрации',
+    'Логин',
+    'Статус',
+    'Список ролей'
+];
+
+const PROFILE_HEADERS = [
     'Дата регистрации',
     'Логин',
     'Статус',
@@ -36,12 +45,8 @@ const convertUser = (user) => {
 export function Users() {
     const [users, update] = useState([]);
 
-    const deleteHandler = () => {
-        utils.getUsersList(update)
-    };
-
-    const deleteUser = (index) => {
-        utils.deleteUser(users[index].id)
+    const deleteHandler = (i) => {
+       console.warn(i)
     };
 
     const convertUsersList = () => {
@@ -56,9 +61,14 @@ export function Users() {
 
     return (
         <div>
+            <div>
+                <RegularButton color="primary">Создать юзера</RegularButton>
+            </div>
             <MaterialTable
                 tableHeaderColor="success"
-                tableHead={HEADERS} tableData={convertUsersList()}
+                tableHead={LIST_HEADERS} tableData={convertUsersList()}
+                action='delete'
+                callback={deleteHandler}
             />
         </div>
     )
@@ -75,7 +85,7 @@ export function Profile() {
 
     return (
         <div className={useStyle().main}>
-            <MaterialTable tableData={[convertUser(user)]} tableHead={HEADERS}/>
+            <MaterialTable tableData={[convertUser(user)]} tableHead={PROFILE_HEADERS}/>
         </div>
     )
 }

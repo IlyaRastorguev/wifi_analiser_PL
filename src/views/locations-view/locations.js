@@ -34,9 +34,8 @@ export function Locations() {
 
     return (
         <div>
-            <div className={useStyle().controls}>
-                <RegularButton className={useStyle().control} color="primary">Добавить локацию</RegularButton>
-                <RegularButton className={useStyle().control} color="warning">Удалить локацию</RegularButton>
+            <div>
+                <RegularButton color="primary">Добавить локацию</RegularButton>
             </div>
             <MaterialTable
                 tableHeaderColor="success"

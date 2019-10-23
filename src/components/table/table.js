@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -8,12 +8,14 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import styles from './style';
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const useStyles = makeStyles(styles);
 
 export default function MaterialTable(props) {
     const classes = useStyles();
+
+    const [selected, update] = useState();
 
     function createDeleteAction(index, callback) {
         return  () => {
@@ -23,7 +25,7 @@ export default function MaterialTable(props) {
 
             return  (
                 <TableCell className={classes.tableCell}>
-                    <IconButton onChange={actionHandler} color='primary'>
+                    <IconButton onClick={actionHandler} color='primary'>
                         <DeleteIcon color='action'/>
                     </IconButton>
                 </TableCell>
@@ -31,7 +33,11 @@ export default function MaterialTable(props) {
         }
     }
 
-    const { tableHead, tableData, tableHeaderColor, action, callback } = props;
+    function selectHandler(key) {
+        update(tableCollapsedData[key])
+    }
+
+    const { tableHead, tableData, tableHeaderColor, tableCollapsedData, action, callback, collapsed } = props;
     return (
         <div className={classes.tableResponsive}>
             <Table className={classes.table}>
@@ -54,7 +60,12 @@ export default function MaterialTable(props) {
                 <TableBody>
                     {tableData.map((prop, key) => {
                         return (
-                            <TableRow key={key} className={classes.tableBodyRow}>
+                            <TableRow
+                                hover
+                                key={key}
+                                className={classes.tableBodyRow}
+                                onClick={collapsed && selectHandler(key)}
+                            >
                                 {action === 'delete' ? createDeleteAction(key, callback)(): ''}
                                 {prop.map((prop, key) => {
                                     return (
@@ -63,6 +74,7 @@ export default function MaterialTable(props) {
                                         </TableCell>
                                     );
                                 })}
+                                {selected}
                             </TableRow>
                         );
                     })}
@@ -89,5 +101,7 @@ MaterialTable.propTypes = {
     tableHead: PropTypes.arrayOf(PropTypes.string),
     tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
     action: PropTypes.oneOf(['delete']),
-    callback: PropTypes.func
+    callback: PropTypes.func,
+    collapsed: PropTypes.bool,
+    tableCollapsedData: PropTypes.arrayOf(PropTypes.node),
 };

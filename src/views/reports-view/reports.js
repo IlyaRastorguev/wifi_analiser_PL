@@ -3,6 +3,7 @@ import MaterialTable from "../../components/table/table";
 import utils from './utils'
 
 const HEADERS = [
+    'Действие',
     'Дата создания',
     'Устройсво',
     'Локация',
@@ -19,13 +20,13 @@ export function Reports() {
         event && event.target && setSize(event.target.value)
     };
 
-    const deleteHandler = () => {
-        utils.getReports(page, size)(update)
+    const deleteHandler = (i) => {
+        console.warn(i)
     };
 
-    const deleteReport = (index) => {
-        utils.deleteReport(reports[index][0])
-    };
+    const reportsDetailInfoConverter = () => {
+
+    }
 
     const reportConverter = () => {
         if (!reports) return [];
@@ -59,6 +60,8 @@ export function Reports() {
                 tableHeaderColor="success"
                 tableHead={HEADERS}
                 tableData={reportConverter()}
+                callback={deleteHandler}
+                action='delete'
             />
         </div>
     )
