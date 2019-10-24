@@ -17,7 +17,8 @@ export default function MaterialTable(props) {
 
     function createDeleteAction(index, handler) {
         return  () => {
-            const actionHandler = () => {
+            const actionHandler = (event) => {
+                event.stopPropagation();
                 handler(index)
             };
 

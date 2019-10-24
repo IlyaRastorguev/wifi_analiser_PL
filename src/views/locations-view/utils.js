@@ -30,7 +30,21 @@ function addLocation(name) {
     })
 }
 
+function deleteLocation(id) {
+
+    return (callback) => axios({
+        method: 'delete',
+        url: `${API.getLocations()}/${id}`,
+        headers: {
+            Authorization: `Bearer ${Auth__API.getToken(Auth__API.auth)}`
+        }
+    }).then((response)=> {
+        callback(response)
+    })
+}
+
 export default {
     getLocations,
-    addLocation
+    addLocation,
+    deleteLocation
 }

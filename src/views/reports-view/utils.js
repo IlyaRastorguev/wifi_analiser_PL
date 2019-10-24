@@ -25,7 +25,7 @@ function deleteReport(id) {
     return (callback) => axios({
         method: 'delete',
         url: `${API.reports()}/${id}`,
-        header: {
+        headers: {
             'Authorization': `Bearer ${Auth__API.getToken(Auth__API.auth)}`,
             'Access-Control-Allow-Origin': `http://localhost:3000`
         },

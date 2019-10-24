@@ -61,7 +61,7 @@ export default function ReportDetails({spots}) {
     }
 
     return (
-        <div className={classes.detailInfo.root}>
+        <div className={classes.detailInfo}>
             {createList()}
         </div>
     );

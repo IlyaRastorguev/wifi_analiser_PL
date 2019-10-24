@@ -44,8 +44,8 @@ export default function AddNewUser() {
     };
 
     const clear = () => {
-        setLogin();
-        setPass();
+        setLogin('');
+        setPass('');
         setIsAdmin(false)
     };
 

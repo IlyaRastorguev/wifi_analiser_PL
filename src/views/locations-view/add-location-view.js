@@ -29,11 +29,11 @@ export default function AddNewLocation() {
     };
 
     const clear = () => {
-        setName();
+        setName('');
     };
 
     const addLocationAction = () => {
-        Utils.addUser(name)(clear)
+        Utils.addLocation(name)(clear)
     };
 
     return (

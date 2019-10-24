@@ -8,6 +8,8 @@ import style from './style'
 import Toolbar from "../../components/toolbar/toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AddNewLocation from "./add-location-view";
+import EmptyView from "../common/empty-view/empty-view";
+import commonUtils from "../common/utils";
 
 const useStyles = makeStyles(style);
 
@@ -21,17 +23,19 @@ export function Locations() {
 
     const [locations, update] = useState([]);
     const [addLocation, add] = useState(false);
+    const [permissions, setPermissions] = useState({});
 
     const backHandler = () => {
-        add(false)
+        add(false);
+        utils.getLocations()(update)
     };
 
     const addHandler = () => {
         add(true)
     };
 
-    const deleteHandler = (index) => {
-        console.warn("delete", index)
+    const deleteHandler = (i) => {
+        utils.deleteLocation(locations[i].id)(() => utils.getLocations()(update))
     };
 
     const convertLocations = () => {
@@ -51,23 +55,26 @@ export function Locations() {
     };
 
     const createLocationsView = () => {
+        if (!locations || locations.length === 0) return (<EmptyView text="Тут пока ничего нет"/>);
+
         return (
             <MaterialTable
                 className={classes.table}
-                tableHead={HEADERS}
+                tableHead={permissions['delete-locations'] ? HEADERS : HEADERS.slice(1, HEADERS.length)}
                 tableData={convertLocations()}
-                deleteHandler={deleteHandler}
+                deleteHandler={permissions['delete-locations'] ? deleteHandler : undefined}
             />
         )
     };
 
     useEffect(() => {
-        utils.getLocations()(update)
+        commonUtils.roleModelHandler(['add-locations', 'delete-locations'], setPermissions);
+        utils.getLocations()(update);
     }, []);
 
     return (
         <div>
-            <Toolbar backHandler={addLocation ? backHandler: undefined} actions={[addLocationButton()]}/>
+            <Toolbar backHandler={addLocation ? backHandler: undefined} actions={permissions['add-locations'] ? [addLocationButton()] : undefined}/>
             {addLocation ? (<AddNewLocation />) : createLocationsView()}
         </div>
 

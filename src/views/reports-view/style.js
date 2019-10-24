@@ -24,11 +24,7 @@ const reportView = {
         minWidth: '200px'
     },
     detailInfo: {
-        root: {
-            width: '100%',
-        },
-        heading: {
-        }
+        padding: '15px'
     },
     BAD: {
         backgroundColor: `rgba(${hexToRgb(dangerColor[0])}, 1)`,

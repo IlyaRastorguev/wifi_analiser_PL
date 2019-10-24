@@ -3,11 +3,13 @@ import MaterialTable from "../../components/table/table";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from '@material-ui/icons/Add'
 import utils from './utils'
+import commonUtils from '../common/utils'
 
 import styles from './style'
 import Toolbar from "../../components/toolbar/toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AddNewUser from "./new-user-view";
+import EmptyView from "../common/empty-view/empty-view";
 
 const useStyle = makeStyles(styles);
 
@@ -49,13 +51,16 @@ export function Users() {
 
     const [users, update] = useState([]);
     const [addUser, add] = useState(false);
+    const [permissions, setPermissions] = useState({});
+
 
     const deleteHandler = (i) => {
-       console.warn(i)
+       utils.deleteUser(users[i].id)(() => utils.getUsersList()(update));
     };
 
     const backHandler = () => {
-        add(false)
+        add(false);
+        utils.getUsersList()(update)
     };
 
     const addHandler = () => {
@@ -81,22 +86,26 @@ export function Users() {
     };
 
     const createUsersView = () => {
+        if (!users || users.length === 0) return (<EmptyView text="Тут пока ничего нет"/>);
+
         return (
             <MaterialTable
                 className={classes.table}
-                tableHead={LIST_HEADERS} tableData={convertUsersList()}
-                deleteHandler={deleteHandler}
+                tableHead={permissions['delete-users'] ? LIST_HEADERS: LIST_HEADERS.slice(1, LIST_HEADERS.length)}
+                tableData={convertUsersList()}
+                deleteHandler={permissions['delete-users'] ? deleteHandler: undefined}
             />
         )
     };
 
     useEffect(() => {
+        commonUtils.roleModelHandler(['add-users', 'delete-users'], setPermissions);
         utils.getUsersList()(update)
     }, []);
 
     return (
         <div>
-            <Toolbar backHandler={addUser ? backHandler : undefined} actions={[addUserButton()]}/>
+            <Toolbar backHandler={addUser ? backHandler : undefined} actions={permissions['add-users'] ? [addUserButton()]: undefined}/>
             {addUser ? createAddUserView() : createUsersView()}
         </div>
     )

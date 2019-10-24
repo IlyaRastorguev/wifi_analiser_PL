@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import MaterialTable from "../../components/table/table";
 import utils from './utils'
+import commonUtils from '../common/utils'
 import locationUtils from '../locations-view/utils';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -12,6 +13,7 @@ import style from './style'
 import TablePagination from "@material-ui/core/TablePagination";
 import ReportDetails from "./report-details";
 import Toolbar from "../../components/toolbar/toolbar";
+import EmptyView from "../common/empty-view/empty-view";
 
 const HEADERS = [
     'Действие',
@@ -32,9 +34,11 @@ export function Reports() {
     const [locations, updateLocations] = useState();
     const [selectedLocation, updateSelectedLocation] = useState("");
     const [selectedReport, setSelectedReport] = useState();
+    const [permissions, setPermissions] = useState({});
 
     useEffect(()=> {
-        locationUtils.getLocations()(updateLocations)
+        locationUtils.getLocations()(updateLocations);
+        commonUtils.roleModelHandler(['delete-reports'], setPermissions)
     }, []);
 
     const locationsHandler = (event) => {
@@ -42,7 +46,7 @@ export function Reports() {
     };
 
     const deleteHandler = (i) => {
-        console.warn(i)
+        utils.deleteReport(reports[i].id)(() => utils.getReports(selectedLocation)(updateReports))
     };
 
     const backHandler = () => setSelectedReport();
@@ -78,15 +82,15 @@ export function Reports() {
     };
 
     const convertReports = () => {
-        if (!reports || reports.length === 0) return [];
+        if (!reports || reports.length === 0) return (<EmptyView text="Для просмотра отчетов необходимо выбрать локацию"/>);
 
         return (
             <FormControl fullWidth>
                 <MaterialTable
                     className={classes.table}
-                    tableHead={HEADERS}
+                    tableHead={permissions['delete-reports'] ? HEADERS : HEADERS.slice(1, HEADERS.length)}
                     tableData={reportToArray()}
-                    deleteHandler={deleteHandler}
+                    deleteHandler={permissions['delete-reports'] ? deleteHandler : undefined}
                     selectHandler={reportsDetailInfoHandler}
                 />
                 {createPaginationBar()}

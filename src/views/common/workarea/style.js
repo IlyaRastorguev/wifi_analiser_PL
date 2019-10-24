@@ -1,7 +1,7 @@
 
 const main = {
     main: {
-        maxWidth: '1024px',
+        maxWidth: '1440px',
         margin: '0 auto',
         padding: '24px'
     }
