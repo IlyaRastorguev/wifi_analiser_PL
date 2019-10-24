@@ -5,10 +5,17 @@ import commonUtils from "../common/utils";
 import RegularButton from "../../components/buttons/button";
 import Utils from './utils'
 
+import styles from './style'
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles(styles);
+
 
 const NAME_EXPR = '';
 
 export default function AddNewLocation() {
+    const classes = useStyles();
+
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState('');
 
@@ -30,7 +37,7 @@ export default function AddNewLocation() {
     };
 
     return (
-        <div>
+        <div className={classes.addNew}>
             <FormControl>
                 <TextField
                     label="Название"

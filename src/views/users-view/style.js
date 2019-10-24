@@ -1,11 +1,5 @@
 
 const profile = {
-    main: {
-        display: 'flex',
-        justifyContent: 'space-around',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-    },
     controls: {
         display: 'flex',
         flexDirection: 'row',
@@ -13,6 +7,12 @@ const profile = {
     },
     control: {
         margin: '0 16px'
+    },
+    addNew: {
+        padding: '0 15px 15px'
+    },
+    table: {
+        padding: '0 15px'
     }
 };
 

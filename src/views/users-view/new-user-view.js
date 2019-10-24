@@ -5,11 +5,18 @@ import commonUtils from "../common/utils";
 import RegularButton from "../../components/buttons/button";
 import Utils from './utils'
 
+import styles from './style'
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles(styles);
+
 
 const LOGIN_EXPR = '';
 const PASSWORD_EXPR = '';
 
 export default function AddNewUser() {
+    const classes = useStyles();
+
     const [pass, setPass] = useState('');
     const [login, setLogin] = useState('');
     const [isAdmin, setIsAdmin] = useState('');
@@ -47,7 +54,7 @@ export default function AddNewUser() {
     };
 
     return (
-        <div>
+        <div className={classes.addNew}>
             <FormControl>
                 <TextField
                     label="Имя пользователя"

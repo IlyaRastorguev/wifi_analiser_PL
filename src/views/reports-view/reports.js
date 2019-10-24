@@ -83,6 +83,7 @@ export function Reports() {
         return (
             <FormControl fullWidth>
                 <MaterialTable
+                    className={classes.table}
                     tableHead={HEADERS}
                     tableData={reportToArray()}
                     deleteHandler={deleteHandler}

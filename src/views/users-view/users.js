@@ -45,6 +45,8 @@ const convertUser = (user) => {
 };
 
 export function Users() {
+    const classes = useStyle();
+
     const [users, update] = useState([]);
     const [addUser, add] = useState(false);
 
@@ -81,6 +83,7 @@ export function Users() {
     const createUsersView = () => {
         return (
             <MaterialTable
+                className={classes.table}
                 tableHead={LIST_HEADERS} tableData={convertUsersList()}
                 deleteHandler={deleteHandler}
             />
@@ -101,6 +104,7 @@ export function Users() {
 
 
 export function Profile() {
+    const classes = useStyle();
 
     const [user, update] = useState();
 
@@ -109,8 +113,8 @@ export function Profile() {
     }, []);
 
     return (
-        <div className={useStyle().main}>
-            <MaterialTable tableData={[convertUser(user)]} tableHead={PROFILE_HEADERS}/>
+        <div>
+            <MaterialTable className={classes.table} tableData={[convertUser(user)]} tableHead={PROFILE_HEADERS}/>
         </div>
     )
 }

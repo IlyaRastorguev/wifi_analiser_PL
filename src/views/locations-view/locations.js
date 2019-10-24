@@ -9,7 +9,7 @@ import Toolbar from "../../components/toolbar/toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AddNewLocation from "./add-location-view";
 
-const useStyle = makeStyles(style);
+const useStyles = makeStyles(style);
 
 const HEADERS = [
     'Действие',
@@ -17,6 +17,8 @@ const HEADERS = [
 ];
 
 export function Locations() {
+    const classes = useStyles();
+
     const [locations, update] = useState([]);
     const [addLocation, add] = useState(false);
 
@@ -51,6 +53,7 @@ export function Locations() {
     const createLocationsView = () => {
         return (
             <MaterialTable
+                className={classes.table}
                 tableHead={HEADERS}
                 tableData={convertLocations()}
                 deleteHandler={deleteHandler}

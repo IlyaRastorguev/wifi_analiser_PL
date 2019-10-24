@@ -92,5 +92,5 @@ CustomTabs.propTypes = {
     ),
     rtlActive: PropTypes.bool,
     plainTabs: PropTypes.bool,
-    bodyClass: PropTypes.object
+    bodyClass: PropTypes.string
 };

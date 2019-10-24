@@ -45,6 +45,9 @@ const reportView = {
     EXCELLENT: {
         backgroundColor: `rgba(${hexToRgb(successColor[0])}, 1)`,
         color: whiteColor
+    },
+    table: {
+        padding: '0 15px'
     }
 };
 

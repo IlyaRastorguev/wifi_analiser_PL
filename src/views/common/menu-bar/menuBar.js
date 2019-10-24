@@ -13,11 +13,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import styles from './style'
 
 export default function MenuBar() {
-    const classes = makeStyles(styles)();
+    const classes = makeStyles(styles);
 
     return (
         <Tabs
-            bodyClass={classes.cardBody}
+            bodyClass={classes().cardBody}
             title="Menu"
             headerColor="success"
             tabs={[

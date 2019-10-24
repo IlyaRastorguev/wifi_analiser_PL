@@ -37,49 +37,52 @@ export default function MaterialTable(props) {
         }
     }
 
-    const { tableHead, tableData, tableColor, deleteHandler, selectHandler } = props;
+    const { className, tableHead, tableData, tableColor, deleteHandler, selectHandler } = props;
+
     return (
-        <div className={classes.tableResponsive}>
-            <Table className={classes.table}>
-                {tableHead !== undefined ? (
-                    <TableHead className={classes[tableColor + "TableHeader"]}>
-                        <TableRow className={classes.tableHeadRow} color="">
-                            {tableHead.map((prop, key) => {
-                                return (
-                                    <TableCell
-                                        className={classes.tableCell + " " + classes.tableHeadCell}
-                                        key={key}
-                                    >
-                                        {prop}
-                                    </TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    </TableHead>
-                ) : null}
-                <TableBody className={classes[tableColor + "TableBody"]}>
-                    {tableData.map((prop, key) => {
-                        return (
-                            <TableRow
-                                hover={!!selectHandler}
-                                key={key}
-                                className={classes.tableBodyRow}
-                                onClick={selectHandler && createSelectAction(key, selectHandler)}
-                                style={selectHandler && {'cursor': 'pointer'}}
-                            >
-                                {!!deleteHandler ? createDeleteAction(key, deleteHandler)(): ''}
-                                {prop.map((prop, key) => {
+        <div className={className}>
+            <div className={classes.tableResponsive}>
+                <Table className={classes.table}>
+                    {tableHead !== undefined ? (
+                        <TableHead className={classes[tableColor + "TableHeader"]}>
+                            <TableRow className={classes.tableHeadRow} color="">
+                                {tableHead.map((prop, key) => {
                                     return (
-                                        <TableCell className={classes.tableCell} key={key}>
+                                        <TableCell
+                                            className={classes.tableCell + " " + classes.tableHeadCell}
+                                            key={key}
+                                        >
                                             {prop}
                                         </TableCell>
                                     );
                                 })}
                             </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
+                        </TableHead>
+                    ) : null}
+                    <TableBody className={classes[tableColor + "TableBody"]}>
+                        {tableData.map((prop, key) => {
+                            return (
+                                <TableRow
+                                    hover={!!selectHandler}
+                                    key={key}
+                                    className={classes.tableBodyRow}
+                                    onClick={selectHandler && createSelectAction(key, selectHandler)}
+                                    style={selectHandler && {'cursor': 'pointer'}}
+                                >
+                                    {!!deleteHandler ? createDeleteAction(key, deleteHandler)(): ''}
+                                    {prop.map((prop, key) => {
+                                        return (
+                                            <TableCell className={classes.tableCell} key={key}>
+                                                {prop}
+                                            </TableCell>
+                                        );
+                                    })}
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </div>
         </div>
     );
 }
@@ -89,6 +92,7 @@ MaterialTable.defaultProps = {
 };
 
 MaterialTable.propTypes = {
+    className: PropTypes.string,
     tableColor: PropTypes.oneOf([
         "warning",
         "primary",
