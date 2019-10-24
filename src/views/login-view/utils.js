@@ -3,21 +3,6 @@ import axios from 'axios'
 
 import { default as API } from './API'
 
-function inputHandler(event, regexp) {
-    if (event && event.target && event.target.value) {
-        return {
-            value: event.target.value,
-            isValid: regexp ? event.target.value.match(regexp) : true
-        }
-    }
-
-    return {
-        value: '',
-        isValid: false
-    }
-}
-
-
 function saveToken(token, key) {
    API.setTokens(key, token)
 }
@@ -78,6 +63,5 @@ function Refresh (username, pass) {
 
 export default {
     Auth,
-    inputHandler,
     checkAuth
 }

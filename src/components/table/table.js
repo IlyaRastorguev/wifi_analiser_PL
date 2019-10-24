@@ -22,7 +22,7 @@ export default function MaterialTable(props) {
             };
 
             return  (
-                <TableCell className={classes.tableCell}>
+                <TableCell size='small' className={classes.tableCell}>
                     <IconButton onClick={actionHandler} color='primary'>
                         <DeleteIcon color='action'/>
                     </IconButton>

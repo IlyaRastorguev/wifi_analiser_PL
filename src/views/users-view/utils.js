@@ -39,8 +39,27 @@ function deleteUser(id) {
     })
 }
 
+function addUser(login, password, isAdmin) {
+
+    return (callback) => axios({
+        method: 'post',
+        url: `${API.getList()}`,
+        headers: {
+            Authorization: `Bearer ${Auth__API.getToken(Auth__API.auth)}`
+        },
+        data: {
+            login,
+            password,
+            isAdmin
+        }
+    }).then((response)=> {
+        callback(response)
+    })
+}
+
 export default {
     getUsersList,
     getMe,
-    deleteUser
+    deleteUser,
+    addUser
 }

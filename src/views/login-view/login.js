@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import style from './style'
 import utils from "./utils";
+import commonUtils from '../common/utils'
 import RouterLink from "../../components/links/routing-link";
 import {CardHeader, TextField} from "@material-ui/core";
 
@@ -20,7 +21,7 @@ export default function Login () {
 
 
     const loginInputHandler = (event) => {
-        const result = utils.inputHandler(event, LOGIN_EXPR);
+        const result = commonUtils.inputHandler(event, LOGIN_EXPR);
 
         setLogin(result.value);
 
@@ -28,7 +29,7 @@ export default function Login () {
         else setLogErr(true)
     };
     const passwordInputHandler = (event) => {
-        const result = utils.inputHandler(event, PASSWORD_EXPR);
+        const result = commonUtils.inputHandler(event, PASSWORD_EXPR);
 
         setPass(result.value);
 

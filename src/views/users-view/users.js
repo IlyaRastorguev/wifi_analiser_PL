@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import MaterialTable from "../../components/table/table";
 import { makeStyles } from "@material-ui/core/styles";
-import {TextField} from "@material-ui/core";
+import AddIcon from '@material-ui/icons/Add'
 import utils from './utils'
 
 import styles from './style'
-import RegularButton from "../../components/buttons/button";
+import Toolbar from "../../components/toolbar/toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import AddNewUser from "./new-user-view";
 
 const useStyle = makeStyles(styles);
 
@@ -44,9 +46,26 @@ const convertUser = (user) => {
 
 export function Users() {
     const [users, update] = useState([]);
+    const [addUser, add] = useState(false);
 
     const deleteHandler = (i) => {
        console.warn(i)
+    };
+
+    const backHandler = () => {
+        add(false)
+    };
+
+    const addHandler = () => {
+        add(true)
+    };
+
+    const addUserButton = () => {
+        return (
+            <IconButton title="Добавить нового юзера" onClick={addHandler}>
+                <AddIcon />
+            </IconButton>
+        )
     };
 
     const convertUsersList = () => {
@@ -55,20 +74,27 @@ export function Users() {
         })
     };
 
+    const createAddUserView = () => {
+        return (<AddNewUser />)
+    };
+
+    const createUsersView = () => {
+        return (
+            <MaterialTable
+                tableHead={LIST_HEADERS} tableData={convertUsersList()}
+                deleteHandler={deleteHandler}
+            />
+        )
+    };
+
     useEffect(() => {
         utils.getUsersList()(update)
     }, []);
 
     return (
         <div>
-            <div>
-                <RegularButton color="primary">Создать юзера</RegularButton>
-            </div>
-            <MaterialTable
-                tableHead={LIST_HEADERS} tableData={convertUsersList()}
-                action='delete'
-                callback={deleteHandler}
-            />
+            <Toolbar backHandler={addUser ? backHandler : undefined} actions={[addUserButton()]}/>
+            {addUser ? createAddUserView() : createUsersView()}
         </div>
     )
 }

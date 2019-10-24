@@ -7,14 +7,20 @@ import styles from './style'
 
 const classes = makeStyles(styles);
 
-export default function Toolbar ({backHandler}) {
+export default function Toolbar ({backHandler, actions = []}) {
 
     return (
         <div className={classes().main}>
-            <IconButton onClick={backHandler} title="Назад">
-                <ArrowBackIosIcon />
-            </IconButton>
-            <span className={classes.backButtonText}>Назад</span>
+            <div className={classes().back}>
+                <IconButton disabled={!backHandler} onClick={backHandler} title="Назад">
+                    <ArrowBackIosIcon />
+                </IconButton>
+                <span className={classes().backButtonText}>Назад</span>
+            </div>
+            <div className={classes().actions}>
+                {actions}
+            </div>
+
         </div>
     )
 }

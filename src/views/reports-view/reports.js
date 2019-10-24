@@ -126,8 +126,7 @@ export function Reports() {
 
     return (
         <div>
-            {selectedReport ? (<Toolbar backHandler={backHandler}/>): ''}
-            {selectedReport ? selectedReport : convertLocations()}
+            <Toolbar backHandler={selectedReport ? backHandler: undefined} actions={convertLocations()}/>
             {selectedReport ? selectedReport : convertReports()}
         </div>
     )

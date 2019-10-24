@@ -14,6 +14,23 @@ function getLocations() {
     })
 }
 
+function addLocation(name) {
+
+    return (callback) => axios({
+        method: 'post',
+        url: `${API.getLocations()}`,
+        headers: {
+            Authorization: `Bearer ${Auth__API.getToken(Auth__API.auth)}`
+        },
+        data: {
+            name
+        }
+    }).then((response)=> {
+        callback(response)
+    })
+}
+
 export default {
-    getLocations
+    getLocations,
+    addLocation
 }

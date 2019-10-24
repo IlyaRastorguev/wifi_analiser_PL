@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import MaterialTable from "../../components/table/table";
 import utils from './utils'
-import RegularButton from "../../components/buttons/button";
 import { makeStyles } from "@material-ui/core/styles";
+import AddIcon from '@material-ui/icons/Add'
 
 import style from './style'
+import Toolbar from "../../components/toolbar/toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import AddNewLocation from "./add-location-view";
 
 const useStyle = makeStyles(style);
 
@@ -15,6 +18,15 @@ const HEADERS = [
 
 export function Locations() {
     const [locations, update] = useState([]);
+    const [addLocation, add] = useState(false);
+
+    const backHandler = () => {
+        add(false)
+    };
+
+    const addHandler = () => {
+        add(true)
+    };
 
     const deleteHandler = (index) => {
         console.warn("delete", index)
@@ -28,21 +40,32 @@ export function Locations() {
         })
     };
 
+    const addLocationButton = () => {
+        return (
+            <IconButton title="Добавить локацию" onClick={addHandler}>
+                <AddIcon />
+            </IconButton>
+        )
+    };
+
+    const createLocationsView = () => {
+        return (
+            <MaterialTable
+                tableHead={HEADERS}
+                tableData={convertLocations()}
+                deleteHandler={deleteHandler}
+            />
+        )
+    };
+
     useEffect(() => {
         utils.getLocations()(update)
     }, []);
 
     return (
         <div>
-            <div>
-                <RegularButton color="primary">Добавить локацию</RegularButton>
-            </div>
-            <MaterialTable
-                tableHead={HEADERS}
-                tableData={convertLocations()}
-                action="delete"
-                callback={deleteHandler}
-            />
+            <Toolbar backHandler={addLocation ? backHandler: undefined} actions={[addLocationButton()]}/>
+            {addLocation ? (<AddNewLocation />) : createLocationsView()}
         </div>
 
     )
