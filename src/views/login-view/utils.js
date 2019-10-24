@@ -29,7 +29,6 @@ function refreshToken(time, usrn, pass) {
 }
 
 function checkAuth() {
-    console.warn("valid", !API.getToken(API.auth));
     return !API.getToken(API.auth)
 }
 
