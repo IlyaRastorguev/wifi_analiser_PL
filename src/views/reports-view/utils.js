@@ -2,7 +2,7 @@ import axios from 'axios';
 import { default as API } from './api'
 import { default as Auth__API } from '../login-view/API'
 
-function getReports(page, size) {
+function getReports(locationId, page, size) {
     return (callback) => axios({
         method: 'get',
         url: API.reports(),
@@ -12,8 +12,9 @@ function getReports(page, size) {
         },
         withCredentials: true,
         params: {
+            locationId,
             page,
-            size
+            size,
         }
     }).then((response)=> {
         callback(response.data)

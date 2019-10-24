@@ -29,10 +29,11 @@ function refreshToken(time, usrn, pass) {
 }
 
 function checkAuth() {
-    return !!API.getToken(API.auth)
+    console.warn("valid", !API.getToken(API.auth));
+    return !API.getToken(API.auth)
 }
 
-function Auth (username, pass, role) {
+function Auth (username, pass) {
     return (callBack) => axios({
         method: 'post',
         url: API.OAuth(),
@@ -47,7 +48,7 @@ function Auth (username, pass, role) {
         params: {
             username: username,
             password: pass,
-            scope: role,
+            scope: 'read write',
             grant_type: 'password'
         }
     }).then(function (response) {

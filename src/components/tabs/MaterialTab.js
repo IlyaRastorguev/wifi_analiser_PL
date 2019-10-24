@@ -19,7 +19,7 @@ export default function CustomTabs(props) {
         setValue(value);
     };
     const classes = useStyles();
-    const { headerColor, plainTabs, tabs, title, rtlActive } = props;
+    const { headerColor, plainTabs, tabs, title, rtlActive, bodyClass } = props;
     const cardTitle = classNames({
         [classes.cardTitle]: true,
         [classes.cardTitleRTL]: rtlActive
@@ -61,7 +61,7 @@ export default function CustomTabs(props) {
                     })}
                 </Tabs>
             </CardHeader>
-            <CardBody>
+            <CardBody className={bodyClass}>
                 {tabs.map((prop, key) => {
                     if (key === value) {
                         return <div key={key}>{prop.tabContent}</div>;
@@ -91,5 +91,6 @@ CustomTabs.propTypes = {
         })
     ),
     rtlActive: PropTypes.bool,
-    plainTabs: PropTypes.bool
+    plainTabs: PropTypes.bool,
+    bodyClass: PropTypes.object
 };

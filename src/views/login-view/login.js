@@ -1,12 +1,7 @@
 import React, {useState} from 'react'
 import PropTypes from 'prop-types';
 import Card from "../../components/card/Card";
-import MaterialInput from "../../components/input/input";
 import { makeStyles } from "@material-ui/core/styles";
-import Select from '@material-ui/core/Select'
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 
 import style from './style'
 import utils from "./utils";
@@ -20,7 +15,6 @@ const PASSWORD_EXPR = '';
 export default function Login () {
     const [pass, setPass] = useState('');
     const [login, setLogin] = useState('');
-    const [scope, setScope] = useState('role1');
     const [passError, setPassErr] = useState(false);
     const [loginError, setLogErr] = useState(false);
 
@@ -28,16 +22,19 @@ export default function Login () {
     const loginInputHandler = (event) => {
         const result = utils.inputHandler(event, LOGIN_EXPR);
 
-        if (result.isValid) setLogin(result.value) && setLogErr(false);
+        setLogin(result.value);
+
+        if (result.isValid) setLogErr(false);
         else setLogErr(true)
     };
     const passwordInputHandler = (event) => {
         const result = utils.inputHandler(event, PASSWORD_EXPR);
 
-        if (result.isValid) setPass(result.value) && setPass(false);
+        setPass(result.value);
+
+        if (result.isValid) setPassErr(false);
         else setPassErr(true)
     };
-    const scopeChangeHandler = (event) => event && event.target && setScope(event.target.value);
 
     return (
         <div className={styles().main}>
@@ -53,7 +50,7 @@ export default function Login () {
                         onChange={loginInputHandler}
                     />
                     <TextField
-                        label="Имя пользователя"
+                        label="Пароль"
                         value={pass}
                         margin="normal"
                         error={passError}
@@ -62,17 +59,7 @@ export default function Login () {
                         onChange={passwordInputHandler}
                     />
                 </div>
-                <FormControl>
-                    <InputLabel htmlFor="scope-select">Выберите вашу роль</InputLabel>
-                    <Select value={scope} onChange={scopeChangeHandler} inputProps={{
-                        name: 'scope',
-                        id: 'scope-select',
-                    }} >
-                        <MenuItem value="read">Только чтение</MenuItem>
-                        <MenuItem value="read write">Чтение и запись</MenuItem>
-                    </Select>
-                </FormControl>
-                <RouterLink to="/home/dashboard" action={utils.Auth(login, pass, scope)} text="Войти"/>
+                <RouterLink disabled={passError || loginError} to="/home/dashboard" action={utils.Auth(login, pass)} text="Войти"/>
             </Card>
         </div>
     )

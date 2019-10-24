@@ -17,8 +17,7 @@ export default function AppRouter() {
                     <Login />
                 </Route>
                 <Route path="/home/dashboard" exact>
-                    <MenuBar />
-                    {/*{AUTH.checkAuth() ? <MenuBar /> : <Redirect to="/login"/>}*/}
+                    {AUTH.checkAuth() ? <MenuBar /> : <Redirect to="/login"/> }
                 </Route>
             </Router>
         </WorkArea>

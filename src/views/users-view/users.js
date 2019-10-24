@@ -65,7 +65,6 @@ export function Users() {
                 <RegularButton color="primary">Создать юзера</RegularButton>
             </div>
             <MaterialTable
-                tableHeaderColor="success"
                 tableHead={LIST_HEADERS} tableData={convertUsersList()}
                 action='delete'
                 callback={deleteHandler}

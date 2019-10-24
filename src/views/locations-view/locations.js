@@ -38,7 +38,6 @@ export function Locations() {
                 <RegularButton color="primary">Добавить локацию</RegularButton>
             </div>
             <MaterialTable
-                tableHeaderColor="success"
                 tableHead={HEADERS}
                 tableData={convertLocations()}
                 action="delete"

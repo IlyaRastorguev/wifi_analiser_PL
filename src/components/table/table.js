@@ -15,12 +15,10 @@ const useStyles = makeStyles(styles);
 export default function MaterialTable(props) {
     const classes = useStyles();
 
-    const [selected, update] = useState();
-
-    function createDeleteAction(index, callback) {
+    function createDeleteAction(index, handler) {
         return  () => {
             const actionHandler = () => {
-                callback(index)
+                handler(index)
             };
 
             return  (
@@ -33,16 +31,18 @@ export default function MaterialTable(props) {
         }
     }
 
-    function selectHandler(key) {
-        update(tableCollapsedData[key])
+    function createSelectAction(index, handler) {
+        return () => {
+           handler(index)
+        }
     }
 
-    const { tableHead, tableData, tableHeaderColor, tableCollapsedData, action, callback, collapsed } = props;
+    const { tableHead, tableData, tableColor, deleteHandler, selectHandler } = props;
     return (
         <div className={classes.tableResponsive}>
             <Table className={classes.table}>
                 {tableHead !== undefined ? (
-                    <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
+                    <TableHead className={classes[tableColor + "TableHeader"]}>
                         <TableRow className={classes.tableHeadRow} color="">
                             {tableHead.map((prop, key) => {
                                 return (
@@ -57,16 +57,17 @@ export default function MaterialTable(props) {
                         </TableRow>
                     </TableHead>
                 ) : null}
-                <TableBody>
+                <TableBody className={classes[tableColor + "TableBody"]}>
                     {tableData.map((prop, key) => {
                         return (
                             <TableRow
-                                hover
+                                hover={!!selectHandler}
                                 key={key}
                                 className={classes.tableBodyRow}
-                                onClick={collapsed && selectHandler(key)}
+                                onClick={selectHandler && createSelectAction(key, selectHandler)}
+                                style={selectHandler && {'cursor': 'pointer'}}
                             >
-                                {action === 'delete' ? createDeleteAction(key, callback)(): ''}
+                                {!!deleteHandler ? createDeleteAction(key, deleteHandler)(): ''}
                                 {prop.map((prop, key) => {
                                     return (
                                         <TableCell className={classes.tableCell} key={key}>
@@ -74,7 +75,6 @@ export default function MaterialTable(props) {
                                         </TableCell>
                                     );
                                 })}
-                                {selected}
                             </TableRow>
                         );
                     })}
@@ -85,11 +85,11 @@ export default function MaterialTable(props) {
 }
 
 MaterialTable.defaultProps = {
-    tableHeaderColor: "gray"
+    tableColor: "gray"
 };
 
 MaterialTable.propTypes = {
-    tableHeaderColor: PropTypes.oneOf([
+    tableColor: PropTypes.oneOf([
         "warning",
         "primary",
         "danger",
@@ -100,8 +100,6 @@ MaterialTable.propTypes = {
     ]),
     tableHead: PropTypes.arrayOf(PropTypes.string),
     tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)),
-    action: PropTypes.oneOf(['delete']),
-    callback: PropTypes.func,
-    collapsed: PropTypes.bool,
-    tableCollapsedData: PropTypes.arrayOf(PropTypes.node),
+    deleteHandler: PropTypes.func,
+    selectHandler: PropTypes.func
 };
