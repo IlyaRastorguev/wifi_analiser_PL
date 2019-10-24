@@ -18,6 +18,9 @@ export default function AppRouter() {
     return (
         <WorkArea>
             <Router>
+                <Route path="/" exact>
+                    <Redirect to="/login"/>
+                </Route>
                 <Route path="/login" exact>
                     <Login />
                 </Route>

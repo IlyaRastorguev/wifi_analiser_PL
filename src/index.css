@@ -10,7 +10,7 @@ body {
   min-height: 100vh;
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  background-image: url("./static/body.jpg");
+  background-image: url("./static/Body.jpg");
   background-color: #e7e7e7
 }
 

@@ -25,7 +25,7 @@ export default function MaterialTable(props) {
             return  (
                 <TableCell size='small' className={classes.tableCell}>
                     <IconButton onClick={actionHandler} color='primary'>
-                        <DeleteIcon color='action'/>
+                        <DeleteIcon color='primary'/>
                     </IconButton>
                 </TableCell>
             )

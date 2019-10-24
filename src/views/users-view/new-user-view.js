@@ -58,7 +58,7 @@ export default function AddNewUser() {
 
     return (
         <div className={classes.addNew}>
-            <FormControl>
+            <FormControl fullWidth>
                 <TextField
                     label="Имя пользователя"
                     value={login}
@@ -76,24 +76,16 @@ export default function AddNewUser() {
                     type="password"
                     onChange={passwordInputHandler}
                 />
-                <TextField
-                    label="Повторите пароль"
-                    value={pass}
-                    margin="normal"
-                    error={passError}
-                    variant="outlined"
-                    type="password"
-                    onChange={passwordInputHandler}
-                />
                 <FormControlLabel control={
                     (<Switch
+                        color="primary"
                         checked={isAdmin}
                         onChange={isLoginCheckboxHandler}
                     />)
                 } label="Администратор"/>
-                <RegularButton color="success" onClick={addUserAction} disabled={loginError || passError}>Создать</RegularButton>
             </FormControl>
             {snack ? (<SnackBarView body="Пользователь успешно добавлен"/>): ''}
+            <RegularButton color="primary" onClick={addUserAction} disabled={loginError || passError}>Создать</RegularButton>
         </div>
     )
 }

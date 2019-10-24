@@ -41,7 +41,7 @@ export default function AddNewLocation() {
 
     return (
         <div className={classes.addNew}>
-            <FormControl>
+            <FormControl fullWidth>
                 <TextField
                     label="Название"
                     value={name}
@@ -50,8 +50,8 @@ export default function AddNewLocation() {
                     variant="outlined"
                     onChange={nameInputHandler}
                 />
-                <RegularButton color="success" onClick={addLocationAction} disabled={nameError}>Добавить</RegularButton>
             </FormControl>
+            <RegularButton color="primary" onClick={addLocationAction} disabled={nameError}>Добавить</RegularButton>
             {snack ? (<SnackBarView body="Вы успешно добавили локацию"/>) : ''}
         </div>
     )
