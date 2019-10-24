@@ -14,6 +14,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import ReportDetails from "./report-details";
 import Toolbar from "../../components/toolbar/toolbar";
 import EmptyView from "../common/empty-view/empty-view";
+import SnackBarView from "../common/snackbar/snackbar";
 
 const HEADERS = [
     'Действие',
@@ -35,6 +36,7 @@ export function Reports() {
     const [selectedLocation, updateSelectedLocation] = useState("");
     const [selectedReport, setSelectedReport] = useState();
     const [permissions, setPermissions] = useState({});
+    const [snack, showSnack] = useState(false);
 
     useEffect(()=> {
         locationUtils.getLocations()(updateLocations);
@@ -46,7 +48,10 @@ export function Reports() {
     };
 
     const deleteHandler = (i) => {
-        utils.deleteReport(reports[i].id)(() => utils.getReports(selectedLocation)(updateReports))
+        utils.deleteReport(reports[i].id)(() => {
+            showSnack(true);
+            utils.getReports(selectedLocation)(updateReports)
+        });
     };
 
     const backHandler = () => setSelectedReport();
@@ -133,6 +138,7 @@ export function Reports() {
         <div>
             <Toolbar backHandler={selectedReport ? backHandler: undefined} actions={convertLocations()}/>
             {selectedReport ? selectedReport : convertReports()}
+            {snack ? (<SnackBarView body="Вы успешно удалили отчёт"/>) : ''}
         </div>
     )
 }

@@ -7,6 +7,7 @@ import Utils from './utils'
 
 import styles from './style'
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import SnackBarView from "../common/snackbar/snackbar";
 
 const useStyles = makeStyles(styles);
 
@@ -18,6 +19,7 @@ export default function AddNewLocation() {
 
     const [name, setName] = useState('');
     const [nameError, setNameError] = useState('');
+    const [snack, showSnack] = useState(false);
 
     const nameInputHandler = (event) => {
         const result = commonUtils.inputHandler(event, NAME_EXPR);
@@ -29,6 +31,7 @@ export default function AddNewLocation() {
     };
 
     const clear = () => {
+        showSnack(true);
         setName('');
     };
 
@@ -49,6 +52,7 @@ export default function AddNewLocation() {
                 />
                 <RegularButton color="success" onClick={addLocationAction} disabled={nameError}>Добавить</RegularButton>
             </FormControl>
+            {snack ? (<SnackBarView body="Вы успешно добавили локацию"/>) : ''}
         </div>
     )
 }

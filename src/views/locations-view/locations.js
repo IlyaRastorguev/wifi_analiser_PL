@@ -10,6 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddNewLocation from "./add-location-view";
 import EmptyView from "../common/empty-view/empty-view";
 import commonUtils from "../common/utils";
+import SnackBarView from "../common/snackbar/snackbar";
 
 const useStyles = makeStyles(style);
 
@@ -24,6 +25,7 @@ export function Locations() {
     const [locations, update] = useState([]);
     const [addLocation, add] = useState(false);
     const [permissions, setPermissions] = useState({});
+    const [snack, showSnack] = useState(false);
 
     const backHandler = () => {
         add(false);
@@ -35,7 +37,10 @@ export function Locations() {
     };
 
     const deleteHandler = (i) => {
-        utils.deleteLocation(locations[i].id)(() => utils.getLocations()(update))
+        utils.deleteLocation(locations[i].id)(() => {
+            showSnack(true);
+            utils.getLocations()(update)
+        })
     };
 
     const convertLocations = () => {
@@ -76,6 +81,7 @@ export function Locations() {
         <div>
             <Toolbar backHandler={addLocation ? backHandler: undefined} actions={permissions['add-locations'] ? [addLocationButton()] : undefined}/>
             {addLocation ? (<AddNewLocation />) : createLocationsView()}
+            {snack ? (<SnackBarView body="Локация успешно удалена"/>) : ''}
         </div>
 
     )

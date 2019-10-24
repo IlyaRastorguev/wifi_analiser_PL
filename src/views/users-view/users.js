@@ -10,6 +10,7 @@ import Toolbar from "../../components/toolbar/toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import AddNewUser from "./new-user-view";
 import EmptyView from "../common/empty-view/empty-view";
+import SnackBarView from "../common/snackbar/snackbar";
 
 const useStyle = makeStyles(styles);
 
@@ -52,10 +53,14 @@ export function Users() {
     const [users, update] = useState([]);
     const [addUser, add] = useState(false);
     const [permissions, setPermissions] = useState({});
+    const [snack, showSnack] = useState(false);
 
 
     const deleteHandler = (i) => {
-       utils.deleteUser(users[i].id)(() => utils.getUsersList()(update));
+       utils.deleteUser(users[i].id)(() => {
+           showSnack(true) ;
+           utils.getUsersList()(update)
+       });
     };
 
     const backHandler = () => {
@@ -107,6 +112,7 @@ export function Users() {
         <div>
             <Toolbar backHandler={addUser ? backHandler : undefined} actions={permissions['add-users'] ? [addUserButton()]: undefined}/>
             {addUser ? createAddUserView() : createUsersView()}
+            {snack ? (<SnackBarView body="Вы успешно удалили пользователя"/>) : ''}
         </div>
     )
 }

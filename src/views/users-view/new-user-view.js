@@ -7,6 +7,7 @@ import Utils from './utils'
 
 import styles from './style'
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import SnackBarView from "../common/snackbar/snackbar";
 
 const useStyles = makeStyles(styles);
 
@@ -22,6 +23,7 @@ export default function AddNewUser() {
     const [isAdmin, setIsAdmin] = useState('');
     const [passError, setPassErr] = useState(false);
     const [loginError, setLogErr] = useState(false);
+    const [snack, showSnack] = useState(false);
 
     const loginInputHandler = (event) => {
         const result = commonUtils.inputHandler(event, LOGIN_EXPR);
@@ -46,7 +48,8 @@ export default function AddNewUser() {
     const clear = () => {
         setLogin('');
         setPass('');
-        setIsAdmin(false)
+        setIsAdmin(false);
+        showSnack(true)
     };
 
     const addUserAction = () => {
@@ -90,6 +93,7 @@ export default function AddNewUser() {
                 } label="Администратор"/>
                 <RegularButton color="success" onClick={addUserAction} disabled={loginError || passError}>Создать</RegularButton>
             </FormControl>
+            {snack ? (<SnackBarView body="Пользователь успешно добавлен"/>): ''}
         </div>
     )
 }
