@@ -10,6 +10,16 @@ body {
   min-height: 100vh;
   overflow: hidden;
   transition: all 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-image: url("./static/body.jpg");
+  background-color: #e7e7e7
+}
+
+.logo {
+  background-image: url("./static/logo.svg");
+  height: 128px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 code {

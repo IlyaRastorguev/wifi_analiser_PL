@@ -5,6 +5,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import utils from './utils'
 
 import styles from './style'
 import MaterialTable from "../../components/table/table";
@@ -19,7 +20,6 @@ export default function ReportDetails({spots}) {
             'Дата проверки',
             'MAC адрес точки',
             'Уровень принимаемого сигнала',
-            'Уровень сигнала точки',
             'Рабочая частота'
         ];
 
@@ -27,33 +27,33 @@ export default function ReportDetails({spots}) {
             spot['creationDate'],
             spot['bssid'],
             spot['rssi'],
-            spot['signalLevel'],
             spot['frequency']
         ]];
 
         return (
-            <MaterialTable
-                tableHead={headers}
-                tableData={data}
-            />
+            <div style={{width: '100%'}}>
+                <MaterialTable
+                    tableHead={headers}
+                    tableData={data}
+                />
+            </div>
         )
     }
 
     function createList() {
         return spots && spots.map((item)=> {
             return (
-                <ExpansionPanel>
+                <ExpansionPanel style={{boxShadow: 'none'}}>
                     <ExpansionPanelSummary
                         className={classes[item['signalLevel']]}
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
                     >
-                        <Typography className={classes.detailInfo.heading}>{item['ssid']}</Typography>
+                        <Typography>{`Точка: ${item['ssid']}. `}</Typography>
+                        <Typography>{`Уровень сигнала: ${utils.signalLevelConverter(item['signalLevel'])}`}</Typography>
                     </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <Typography>
-                            {createSpotDetailsView(item)}
-                        </Typography>
+                    <ExpansionPanelDetails className={classes.expanded}>
+                        {createSpotDetailsView(item)}
                     </ExpansionPanelDetails>
                 </ExpansionPanel>
             )

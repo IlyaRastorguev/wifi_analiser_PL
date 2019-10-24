@@ -41,6 +41,7 @@ export default function Login () {
         <div className={styles().main}>
             <Card className={styles().card}>
                 <CardHeader title="Добро пожаловать в анализатор wi-fi сетей"/>
+                <div className="logo"/>
                 <div style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                     <TextField
                         label="Имя пользователя"

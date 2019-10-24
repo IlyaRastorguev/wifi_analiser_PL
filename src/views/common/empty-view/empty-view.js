@@ -10,6 +10,7 @@ export default function EmptyView({text}) {
 
     return (
         <div className={classes.main}>
+            <div className="logo"/>
             <Typography variant="h6">{text}</Typography>
         </div>
     )

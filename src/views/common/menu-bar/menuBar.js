@@ -18,26 +18,26 @@ export default function MenuBar() {
     return (
         <Tabs
             bodyClass={classes().cardBody}
-            title="Menu"
+            title="Панель управления"
             headerColor="success"
             tabs={[
                 {
-                    tabName: "Reports",
+                    tabName: "Отчёты",
                     tabIcon: BugReport,
                     tabContent: (<Reports />)
                 },
                 {
-                    tabName: "Users",
+                    tabName: "Пользователи системы",
                     tabIcon: ViewList,
                     tabContent: (<Users />)
                 },
                 {
-                    tabName: "Locations",
+                    tabName: "Локации",
                     tabIcon: Location,
                     tabContent: (<Locations />)
                 },
                 {
-                    tabName: "User settings",
+                    tabName: "Аккаунт",
                     tabIcon: AccountCircle,
                     tabContent: (<Profile />)
                 }

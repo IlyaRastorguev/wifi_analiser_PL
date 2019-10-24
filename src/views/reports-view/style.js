@@ -2,7 +2,7 @@ import {
     successColor,
     warningColor,
     dangerColor,
-    hexToRgb, whiteColor
+    hexToRgb, whiteColor, boxShadow
 } from '../../components/connon-styles';
 
 function convertSignalLevelToColor(value) {
@@ -27,20 +27,27 @@ const reportView = {
         padding: '15px'
     },
     BAD: {
-        backgroundColor: `rgba(${hexToRgb(dangerColor[0])}, 1)`,
-        color: whiteColor
+        border: `2px solid rgb(${hexToRgb(dangerColor[0])})`,
+        borderRadius: '4px',
+        margin: '2px 0'
     },
     NORMAL: {
-        backgroundColor: `rgba(${hexToRgb(warningColor[3])}, 1)`,
-        color: whiteColor
+        border: `2px solid rgb(${hexToRgb(warningColor[0])})`,
+        borderRadius: '4px',
+        margin: '2px 0'
     },
     GOOD: {
-        backgroundColor: `rgba(${hexToRgb(successColor[3])}, 1)`,
-        color: whiteColor
+        border: `2px solid rgb(${hexToRgb(successColor[3])})`,
+        borderRadius: '4px',
+        margin: '2px 0'
     },
     EXCELLENT: {
-        backgroundColor: `rgba(${hexToRgb(successColor[0])}, 1)`,
-        color: whiteColor
+        border: `2px solid rgb(${hexToRgb(successColor[0])})`,
+        borderRadius: '4px',
+        margin: '2px 0'
+    },
+    expanded: {
+        boxShadow: '0px 20px 14px -19px rgb(105, 105, 105), -20px -19px 0px 0px rgb(255, 255, 255), 20px -20px 0px 0px rgb(255, 255, 255)'
     },
     table: {
         padding: '0 15px'

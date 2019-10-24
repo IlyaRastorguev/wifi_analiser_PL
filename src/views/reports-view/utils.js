@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { default as API } from './api'
 import { default as Auth__API } from '../login-view/API'
+import {dangerColor, hexToRgb, successColor, warningColor} from "../../components/connon-styles";
 
 function getReports(locationId, page, size) {
     return (callback) => axios({
@@ -35,7 +36,22 @@ function deleteReport(id) {
     })
 }
 
+function signalLevelConverter(level) {
+    switch (level) {
+        case "NORMAL":
+            return 'приемлемый';
+        case "GOOD":
+            return 'хороший';
+        case "EXCELLENT":
+            return 'отличный';
+        case "BAD":
+            return 'неприемлемый';
+
+    }
+}
+
 export default {
     getReports,
-    deleteReport
+    deleteReport,
+    signalLevelConverter
 }
